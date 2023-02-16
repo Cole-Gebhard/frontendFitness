@@ -1,42 +1,62 @@
-import React from "react";
-import axios from "axios";
-import { BASE_URL, COHORT_NAME } from "../const";
+import React, {useState} from "react";
+import { login } from "./api/requests";
 
 const Login = ({
+    setUser,
+    setToken,
+    user,
     username,
     password,
     setUsername,
-    setPassword,
-    setToken
+    setPassword
 }) => {
 
 
     return (<div id='login'>
-        <h2>
-            Log In
-        </h2>
+
         <form
             onSubmit={
                 async (event) => {
                     event.preventDefault()
+
+                   try{
+                        console.log(username, password)
+                        const response = await login(username, password)
+                        console.log(response.token)
+                        setToken(response.token)
+
+                        if (response.token){
+                            
+                            setUser(localStorage.getItem('user'))
+                            window.location.href = ('/#/')
+                        } else {
+                            setUser(false)
+                        }
+                   } catch (error) {
+                        console.error(error)
+                   }
+
                 }
             }>
+            <h2>
+                Log In
+            </h2>
             <label>
-                <input class='input'
+                <input className='input'
                     placeholder="Username"
-                    onChange={setUsername}
+                    onChange={event => setUsername(event.target.value)}
                     value={username}
                 />
             </label>
             <label>
-                <input class='input'
+                <input className='input'
                     placeholder="Password"
-                    onChange={setPassword}
+                    onChange={event => setPassword(event.target.value)}
                     value={password}
                     type={'password'} />
             </label>
-            <button class='button' type="submit">Login</button>
-            <a href='/#/register' class='button' id='makeaccount' type="submit">New? Click here</a>
+            <button className='button' type="submit">Login</button>
+            <a href='/#/register' className='button' id='makeaccount' type="submit">New? Click here</a>
         </form>
     </div>)
 }
