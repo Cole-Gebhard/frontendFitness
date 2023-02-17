@@ -5,7 +5,6 @@ const Routines = ({
     routines,
     setRoutines,
     token,
-    currentUser
 }) => {
 
     useEffect(() => {
@@ -31,10 +30,10 @@ const Routines = ({
                     <p>goal: { routine.goal }</p>
                     <p>User: { routine.creatorName }</p>
                     <ul > Activities
-                        <li  className="routineActivityCard">{
+                        <li  className="routineActivityCards">{
                             routine.activities.map((activity) => {
                                 return (
-                                    <div>
+                                    <div className="routineActivityCard">
                                         <ul>
                                         <h5>{activity.name}</h5>
                                         <p>Info: {activity.description}</p>
