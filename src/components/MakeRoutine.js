@@ -32,6 +32,8 @@ const MakeRoutine = ({
 
         try {
             const routine = await makeRoutine({name, goal, isPublic}, token)
+            
+            console.log(routine)
 
             if (!name || !goal){
                 window.alert('Missing required field');
@@ -39,11 +41,9 @@ const MakeRoutine = ({
             else if (routine){
                 window.alert(`Routine with name: ${name} made succesfully`);
             }
-            else {
+            else if (!routine){
                 window.alert(`Routine with name: ${name} already exists`);
             }
-
-
 
         }
         catch (error) {
@@ -53,7 +53,8 @@ const MakeRoutine = ({
         } finally {
             setName('');
             setGoal('');
-            // window.location.reload();
+            window.location.replace('http://localhost:3000/#/userroutines');
+            window.location.reload();
         }
 
     }
@@ -67,10 +68,10 @@ const MakeRoutine = ({
             onSubmit={
                 handleSubmit
             }
-        >
+        ><div id='routineText'>
             <label>
                 Name*
-                <textarea id='postInput'
+                <input id='postInput'
                     placeholder="Name"
                     value={name}
                     onChange={(event) => {
@@ -88,6 +89,7 @@ const MakeRoutine = ({
                     }}
                 />
             </label>
+            </div>
 
             <label>
                 Public?
